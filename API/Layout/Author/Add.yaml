@@ -1,0 +1,11 @@
+- name: Section
+  type: section
+  column: 4
+  showTitle: true
+  fields:
+    - name: TenantId
+      type: Guid
+      referenceEntity: ''
+      label: TenantId
+      column: 4
+      showTitle: true

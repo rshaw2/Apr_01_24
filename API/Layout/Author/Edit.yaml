@@ -1,0 +1,19 @@
+- name: General
+  type: section
+  column: 2
+  showTitle: true
+  fields:
+    - name: Id
+      type: Guid
+      referenceEntity: ''
+      label: Id
+      column: 4
+      showTitle: true
+- name: Additional
+  type: section
+  column: 2
+  showTitle: true
+- name: Prev. history
+  type: section
+  column: 4
+  showTitle: true
