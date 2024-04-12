@@ -1,0 +1,54 @@
+- name: General
+  type: section
+  column: 2
+  showTitle: true
+  fields:
+    - dataType: string
+      label: Title
+      column: 4
+      fieldName: Title
+      required: true
+    - dataType: decimal
+      label: Price
+      column: 4
+      fieldName: Price
+    - dataType: guid
+      dataSource: Author
+      label: Author id
+      column: 4
+      fieldName: AuthorId
+- name: Additional
+  type: section
+  column: 2
+  showTitle: true
+  fields:
+    - dataType: string
+      label: Publication
+      column: 4
+      fieldName: Publication
+    - dataType: string
+      label: Genre
+      column: 2
+      fieldName: Genre
+    - dataType: bool
+      required: true
+      label: Is available
+      column: 2
+      fieldName: IsAvailable
+    - dataType: int
+      label: Quantity
+      column: 4
+      fieldName: Quantity
+- name: History
+  type: section
+  column: 4
+  showTitle: true
+  fields:
+    - dataType: guid
+      label: Created by
+      column: 4
+      fieldName: CreatedBy
+    - dataType: guid
+      label: Updated by
+      column: 4
+      fieldName: UpdatedBy
