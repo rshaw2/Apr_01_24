@@ -13,7 +13,7 @@
             .mdc-dialog__content {
                 padding: 0 calc(var(--ec-dialog-padding) / 2);
                 margin: 0 calc(-1 * var(--ec-dialog-padding) / 2);
-                height: calc(100vh - 162px);
+                height: calc(100vh - 146px);
                 overflow: auto;
                 @extend .ec-custom-scroll;
             }
@@ -572,7 +572,7 @@
 }
 
 .dialog-header {
-    margin-bottom: 20px;
+    // margin-bottom: 10px;
 
     .mat-mdc-icon-button {
         &.mat-mdc-button-base {

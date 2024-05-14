@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Apr0124.Entities
 {
+#pragma warning disable
     /// <summary> 
     /// Represents a userinrole entity with essential details
     /// </summary>

@@ -28,6 +28,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { TemplatePreviewComponent } from '../template/template-preview/template-preview.component';
 import { DynamicLayoutComponent } from '../template/dynamic-layout/dynamic-layout.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { PreviewLayoutComponent } from '../template/preview-layout/preview-layout.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     DashboardComponent,
     TemplateComponent,
     TemplatePreviewComponent,
-    DynamicLayoutComponent
+    DynamicLayoutComponent,
+    PreviewLayoutComponent
   ],
   imports: [
     CommonModule,
@@ -62,7 +65,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatAutocompleteModule,
     MatSlideToggleModule,
     FormsModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    NgxMatSelectSearchModule
   ],
   providers: [
     provideNativeDateAdapter()

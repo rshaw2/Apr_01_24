@@ -3,13 +3,24 @@ using Apr0124.Entities;
 
 namespace Apr0124.Data
 {
+    /// <summary>
+    /// Represents the database context for the application.
+    /// </summary>
     public class Apr0124Context : DbContext
     {
+        /// <summary>
+        /// Configures the database connection options.
+        /// </summary>
+        /// <param name="optionsBuilder">The options builder used to configure the database connection.</param>
         protected override void OnConfiguring(Microsoft.EntityFrameworkCore.DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=;Initial Catalog=;Persist Security Info=True;user id=;password=;Integrated Security=false;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=true;");
         }
 
+        /// <summary>
+        /// Configures the model relationships and entity mappings.
+        /// </summary>
+        /// <param name="modelBuilder">The model builder used to configure the database model.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserInRole>().HasKey(a => a.Id);
@@ -43,14 +54,49 @@ namespace Apr0124.Data
             modelBuilder.Entity<Books>().HasOne(a => a.AuthorId_Author).WithMany().HasForeignKey(c => c.AuthorId);
         }
 
+        /// <summary>
+        /// Represents the database set for the UserInRole entity.
+        /// </summary>
         public DbSet<UserInRole> UserInRole { get; set; }
+
+        /// <summary>
+        /// Represents the database set for the UserToken entity.
+        /// </summary>
         public DbSet<UserToken> UserToken { get; set; }
+
+        /// <summary>
+        /// Represents the database set for the RoleEntitlement entity.
+        /// </summary>
         public DbSet<RoleEntitlement> RoleEntitlement { get; set; }
+
+        /// <summary>
+        /// Represents the database set for the Entity entity.
+        /// </summary>
         public DbSet<Entity> Entity { get; set; }
+
+        /// <summary>
+        /// Represents the database set for the Tenant entity.
+        /// </summary>
         public DbSet<Tenant> Tenant { get; set; }
+
+        /// <summary>
+        /// Represents the database set for the User entity.
+        /// </summary>
         public DbSet<User> User { get; set; }
+
+        /// <summary>
+        /// Represents the database set for the Role entity.
+        /// </summary>
         public DbSet<Role> Role { get; set; }
+
+        /// <summary>
+        /// Represents the database set for the Author entity.
+        /// </summary>
         public DbSet<Author> Author { get; set; }
+
+        /// <summary>
+        /// Represents the database set for the Books entity.
+        /// </summary>
         public DbSet<Books> Books { get; set; }
     }
 }

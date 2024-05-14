@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Observable, Subject, forkJoin, of, takeUntil } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { EntityDataService } from 'src/app/angular-app-services/entity-data.service';
 import { LayoutService } from 'src/app/angular-app-services/layout.service';
 import { Option } from '../dynamic-layout/layout-models';
 import { SweetAlertService } from 'src/app/angular-app-services/sweet-alert.service';
-import { DEFAULT_PAGESIZE, _camelCase, _camelToSentenceCase, _toSentenceCase } from 'src/app/library/utils';
+import { _camelCase, _camelToSentenceCase, _toSentenceCase } from 'src/app/library/utils';
 
 @Component({
   selector: 'app-template-add',
@@ -23,12 +23,6 @@ export class TemplateAddComponent implements OnInit, OnDestroy {
   public form?: FormGroup;
   public layoutData: any[] = [];
 
-  private filters: any[] = [];
-  private pageNumber: number = 1;
-  private pageSize: number = DEFAULT_PAGESIZE;
-  private searchTerm: string = '';
-  private sortField: string = 'name';
-  private sortOrder: string = 'asc';
   private destroy = new Subject();
 
   constructor(
@@ -62,7 +56,7 @@ export class TemplateAddComponent implements OnInit, OnDestroy {
       data.id = this.id;
     }
     const apiCall = this.id ? this.entityDataService.editRecordById(this.entityName, this.id, data) : this.entityDataService.addRecord(this.entityName, data);
-    apiCall.pipe(takeUntil(this.destroy))
+    apiCall?.pipe(takeUntil(this.destroy))
       .subscribe({
         next: data => {
           if (data) {
@@ -101,7 +95,7 @@ export class TemplateAddComponent implements OnInit, OnDestroy {
 
   private getLayout(entityName: string, layoutType: string): void {
     this.layoutService.getLayout(entityName, layoutType)
-      .pipe(takeUntil(this.destroy))
+      ?.pipe(takeUntil(this.destroy))
       .subscribe({
         next: data => {
           this.layoutData = data;
@@ -109,50 +103,34 @@ export class TemplateAddComponent implements OnInit, OnDestroy {
             this.getRecord(this.id);
           } else {
             this.form = new FormGroup({});
-            const apis = this.initializeForm(data);
-            this.getOptions(null, apis);
+            this.initializeForm(data);
+            this.getOptions(null);
           }
         }
       });
   }
 
-  private getOptions(data: any, apis: Array<Observable<any[]>>): void {
-    const fields: string[] = [];
-    Object.keys(this.fieldOptions).forEach(key => {
-      fields.push(key);
-    });
+  private getOptions(data: any): void {
     this.form?.patchValue(data);
-    if (!apis || apis.length === 0) return;
-
-    forkJoin(apis)
-      .pipe(takeUntil(this.destroy))
-      .subscribe({
-        next: data => {
-          fields.forEach((fieldName, index) => {
-            this.fieldOptions[fieldName] = data[index].map(item => { return { value: item.id, text: item.name }; });
-          });
-        }
-      });
   }
 
   private getRecord(id: string): void {
     this.entityDataService.getRecordById(this.entityName, id)
-      .pipe(takeUntil(this.destroy))
+      ?.pipe(takeUntil(this.destroy))
       .subscribe({
         next: data => {
           this.form = new FormGroup({});
-          const apis = this.initializeForm(this.layoutData, data);
-          this.getOptions(data, apis);
+          this.initializeForm(this.layoutData, data);
+          this.getOptions(data);
         }
       });
   }
 
-  private initializeForm(fields: any[], data?: any): Array<Observable<any[]>> {
-    const apis: Array<Observable<any[]>> = [];
+  private initializeForm(fields: any[], data?: any) {
     // Loop through the fields and add form controls
     fields.forEach(field => {
       if (field.type === 'section') {
-        apis.push(...this.initializeForm(field.fields, data));
+        this.initializeForm(field.fields, data);
       } else {
         field.fieldName = _camelCase(field.fieldName);
         const defaultValue = this.getDefaultValue(field),
@@ -162,6 +140,9 @@ export class TemplateAddComponent implements OnInit, OnDestroy {
           (typeof field.required === 'string' && field.required.toLowerCase() === 'true')
         ) {
           validators.push(Validators.required);
+          field.required = true;
+        } else {
+          field.required = false;
         }
 
         if (field.dataType.toLowerCase() === 'numeric') {
@@ -181,15 +162,13 @@ export class TemplateAddComponent implements OnInit, OnDestroy {
         }
 
         this.form?.addControl(field.fieldName, new FormControl(defaultValue, validators));
-        if (field.dataType.toLowerCase() === 'guid' && !this.fieldOptions[field.fieldName]) {
-          this.fieldOptions[field.fieldName] = [];
-          if (field.dataSource)
-            apis.push(this.entityDataService.getRecords(field.dataSource, this.filters, this.searchTerm, this.pageNumber, this.pageSize, this.sortField, this.sortOrder));
-          else
-            apis.push(of([]));
+        if (field.dataType?.toLowerCase() === 'guid') {
+          this.form?.addControl(field.fieldName + '_search', new FormControl(''));
+          if (!this.fieldOptions[field.fieldName]) {
+            this.fieldOptions[field.fieldName] = [];
+          }
         }
       }
     });
-    return apis;
   }
 }

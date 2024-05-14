@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { TemplateAddComponent } from '../template-add/template-add.component';
 import { MatDialog } from '@angular/material/dialog';
 import { EntityDataService } from 'src/app/angular-app-services/entity-data.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, debounceTime, delay, distinctUntilChanged, filter, takeUntil } from 'rxjs';
 import { SweetAlertService } from 'src/app/angular-app-services/sweet-alert.service';
 import { DEFAULT_PAGESIZE, RegExGuid, _camelToSentenceCase, _toSentenceCase } from 'src/app/library/utils';
 import { Option } from '../dynamic-layout/layout-models';
@@ -20,8 +20,8 @@ export class TemplateListComponent implements OnInit, OnChanges, OnDestroy {
   @Input() fieldOptions: { [key: string]: Option[]; } = {};
   @Input() filterFields: any[] = [];
   @Input() form?: FormGroup;
-  @Input() isLoadMore: boolean = false;
   @Input() isLoading: boolean = false;
+  @Input() isLoadMore: boolean = false;
   @Input() mappedData: any[] = [];
   @Input() selectedIndex: number | null = 0;
 
@@ -32,6 +32,7 @@ export class TemplateListComponent implements OnInit, OnChanges, OnDestroy {
 
   public entityDisplayName: string = '';
   public filterData: any[] = [];
+  public isDropDownLoading: boolean = false;
   public searchTerm: string = '';
   public sentenceCaseEntityName: string = '';
   public showFilterPanel: boolean = false;
@@ -40,19 +41,21 @@ export class TemplateListComponent implements OnInit, OnChanges, OnDestroy {
   private filter: any[] = [];
   private pageNumber: number = 1;
   private pageSize = DEFAULT_PAGESIZE;
+  private readonly sortField: string = 'name';
+  private readonly sortOrder: string = 'asc';
 
   constructor(
     private dialog: MatDialog,
     private entityDataService: EntityDataService,
     private sweetAlertService: SweetAlertService,
-    private tooltipService: TooltipService,
-    private renderer: Renderer2
+    private tooltipService: TooltipService
   ) {
   }
 
   ngOnInit(): void {
     this.sentenceCaseEntityName = _toSentenceCase(_camelToSentenceCase(this.entityName));
     this.entityDisplayName = _camelToSentenceCase(this.entityName);
+    this.initializeDropDownFields();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -60,6 +63,10 @@ export class TemplateListComponent implements OnInit, OnChanges, OnDestroy {
       this.clearAll();
       this.sentenceCaseEntityName = _toSentenceCase(_camelToSentenceCase(this.entityName));
       this.entityDisplayName = _camelToSentenceCase(this.entityName);
+      this.initializeDropDownFields();
+    }
+    if (changes['filterFields']) {
+      this.initializeDropDownFields();
     }
     setTimeout(() => {
       const inline: ScrollIntoViewOptions = { inline: 'center' };
@@ -80,7 +87,7 @@ export class TemplateListComponent implements OnInit, OnChanges, OnDestroy {
 
   public addRecord(): void {
     const dialog = this.dialog.open(TemplateAddComponent, {
-      width: '50vw',
+      width: '73vw',
       height: '100vh',
       position: {
         top: '0px',
@@ -135,7 +142,7 @@ export class TemplateListComponent implements OnInit, OnChanges, OnDestroy {
 
   public editRecordById(id: string): void {
     const dialog = this.dialog.open(TemplateAddComponent, {
-      width: '50vw',
+      width: '73vw',
       height: '100vh',
       position: {
         top: '0px',
@@ -177,7 +184,6 @@ export class TemplateListComponent implements OnInit, OnChanges, OnDestroy {
 
   public onEnterPressed(): void {
     this.pageNumber = 1;
-    this.searchTerm;
     this.setRefreshData();
   }
 
@@ -196,6 +202,7 @@ export class TemplateListComponent implements OnInit, OnChanges, OnDestroy {
           visibleText = maskedValue;
         if (typeof value.getMonth === 'function') {
           maskedValue = value.toISOString();
+          visibleText = value.toLocaleDateString();
         } else if (typeof value === 'boolean') {
           visibleText = `${this.filterFields.find(o => o.fieldName === key)?.label || key}: ${value ? 'Yes' : 'No'}`;
         } else if (RegExGuid.test(value)) {
@@ -235,6 +242,45 @@ export class TemplateListComponent implements OnInit, OnChanges, OnDestroy {
           this.sweetAlertService.showSuccess(this.sentenceCaseEntityName + ' has been deleted.');
         }
       });
+  }
+
+  private getOptions(entityName: string, fieldName: string, searchTerm: any, isUserInput: boolean): void {
+    this.isDropDownLoading = true;
+    const api = !isUserInput
+      ? this.entityDataService.getRecords(entityName, [{ PropertyName: 'id', Operator: 'Equals', Value: searchTerm }], '', this.pageNumber, this.pageSize, this.sortField, this.sortOrder)
+      : this.entityDataService.getRecords(entityName, [], searchTerm, this.pageNumber, this.pageSize, this.sortField, this.sortOrder);
+
+    api.pipe(takeUntil(this.destroy))
+      .subscribe({
+        next: (data) => {
+          this.fieldOptions[fieldName] = data?.map(item => { return { value: item.id, text: item.name } as Option; });
+        },
+        complete: () => {
+          this.isDropDownLoading = false;
+        }
+      });
+  }
+
+  private initializeDropDownFields(): void {
+    console.log(this.fieldOptions);
+    const guidFields = this.filterFields?.filter(field => field.dataType?.toLowerCase() === 'guid');
+    guidFields?.forEach(field => {
+      this.form?.get(field.fieldName + '_search')?.valueChanges
+        .pipe(
+          filter(search => { this.isDropDownLoading = true; return !!search; }),
+          distinctUntilChanged(),
+          takeUntil(this.destroy),
+          debounceTime(400),
+          delay(100),
+          takeUntil(this.destroy)
+        ).subscribe({
+          next: (search) => {
+            this.getOptions(field.dataSource, field.fieldName, search, true);
+          }
+        });
+    });
+    const guidData = guidFields?.filter(field => this.form?.get(field.fieldName)?.value);
+    guidData?.map(field => { return this.getOptions(field.dataSource, field.fieldName, this.form?.get(field.fieldName)?.value, false); });
   }
 
   private setRefreshData(): void {

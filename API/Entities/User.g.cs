@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Apr0124.Entities
 {
+#pragma warning disable
     /// <summary> 
     /// Represents a user entity with essential details
     /// </summary>
@@ -58,10 +59,10 @@ namespace Apr0124.Entities
         public string Saltkey { get; set; }
 
         /// <summary>
-        /// DOB of the User 
+        /// Dob of the User 
         /// </summary>
         [Column(TypeName = "datetime")]
-        public DateTime? DOB { get; set; }
+        public DateTime? Dob { get; set; }
 
         /// <summary>
         /// Required field IsSuperAdmin of the User 

@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Apr0124.Entities
 {
+#pragma warning disable
     /// <summary> 
     /// Represents a books entity with essential details
     /// </summary>
@@ -15,9 +16,9 @@ namespace Apr0124.Entities
         /// </summary>
         public Books()
         {
-            Price = 100;
+            Price = 100M;
             Quantity = 1;
-            IsAvailable = "True";
+            IsAvailable = true;
         }
 
         /// <summary>

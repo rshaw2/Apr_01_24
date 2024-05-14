@@ -1,7 +1,7 @@
 @import 'token/color';
 
 // base font family
-$font-family-base: "Poppins", sans-serif;
+$font-family-base: "Roboto", sans-serif;
 $reset-rem-size: 16px;
 $font-size-base: 0.7rem;
 
@@ -21,6 +21,7 @@ $primary-color: #3699ff;
 $primary-hover-color: #095cb2;
 $primary-link-color: #0b75e2;
 $primary-color-darker: #0172C0;
+$primary-color-lighter: #8ac5ff;
 
 // color for text
 $primary-black: #212121;
@@ -34,7 +35,7 @@ $color-4: #3d3d3d;
 $color-5: #80879a;
 $color-6: #9EA3B3;
 
-$icon-color: #8e8e8e;
+$icon-color: #99a1b7;
 
 $border-color: #ededed;
 $border-color-light: #f1f2f3;

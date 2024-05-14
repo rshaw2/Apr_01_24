@@ -24,7 +24,7 @@ export class SideBarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.menuService.getMenu()
-      .pipe(takeUntil(this.destroy))
+      ?.pipe(takeUntil(this.destroy))
       .subscribe(data => {
         this.menuData = data;
       });
@@ -72,11 +72,11 @@ export class SideBarComponent implements OnInit, OnDestroy {
   }
 
   openLogoutDialog(event: any) {
-    const targetAttr = event.target.getBoundingClientRect(),
+    const targetAttr = event?.target?.getBoundingClientRect(),
       dialogConfig = new MatDialogConfig();
 
     dialogConfig.position = {
-      left: targetAttr.x + targetAttr.width + 15 + 'px',
+      left: targetAttr?.x + targetAttr?.width + 15 + 'px',
       bottom: '15px'
     };
 

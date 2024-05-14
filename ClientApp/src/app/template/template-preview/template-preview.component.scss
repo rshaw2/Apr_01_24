@@ -1,3 +1,5 @@
+@import '../../../assets/scss/helpers/variables';
+
 .preview-tem-dtl-column-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -25,21 +27,13 @@
             line-height: 2;
             color: var(--primary-black);
             position: relative;
-        }
-
-        .section-header::after {
-            content: '';
-            position: absolute;
-            bottom: 0px;
-            left: 0;
-            width: 70px;
-            height: 2px;
-            background-color: var(--primary-color-darker);
+            background-color: $bg-color-4;
+            padding-left: 10px;
         }
     }
 
     .preview-data {
-        background: var(--bg-color-4);
+        background: var(--bg-color-5);
         padding: 6px 12px;
         border: 1px solid var(--border-color);
         border-radius: 6px;
@@ -50,6 +44,14 @@
         .color-font-preview {
             color: var(--color-5);
         }
+    }
+}
+
+.ec-icon-gray-btn:hover {
+    background-color: transparent;
+
+    .icon-gray-btn-text {
+        color: $primary-color;
     }
 }
 

@@ -1,0 +1,203 @@
+cells:
+  - type: app.OtherConditionShape
+    columns: []
+    padding:
+      top: 40
+      bottom: 10
+      left: 10
+      right: 10
+    size:
+      width: 251
+      height: 100
+    itemMinLabelWidth: 80
+    itemHeight: 25
+    itemOffset: 0
+    itemOverflow: true
+    position:
+      x: 50
+      y: 25
+    angle: 0
+    title: Trigger
+    id: 279a764b-d624-4699-816f-b28fae07698c
+    z: 1
+    attrs:
+      headerLabel:
+        text: Start
+  - type: app.OtherConditionShape
+    columns: []
+    padding:
+      top: 40
+      bottom: 10
+      left: 10
+      right: 10
+    size:
+      width: 251
+      height: 300
+    itemMinLabelWidth: 80
+    itemHeight: 25
+    itemOffset: 0
+    itemOverflow: true
+    position:
+      x: 30
+      y: 391
+    angle: 0
+    title: Delete
+    id: 86219b1a-10de-46de-b910-8b00d73db871
+    z: 2
+    attrs:
+      headerLabel:
+        text: Delete
+  - type: standard.Circle
+    position:
+      x: 133
+      y: 596
+    size:
+      width: 15
+      height: 15
+    angle: 0
+    title: Circle
+    id: 8513df80-2d5c-4931-aa1c-783def30be73
+    z: 3
+    attrs:
+      root:
+        tabindex: 12
+      body:
+        strokeWidth: 0.5
+        stroke: "#ccc"
+        fill: "#faf9f7"
+        filter:
+          name: highlight
+          args:
+            color: "#000"
+            width: 0.5
+            opacity: 2
+            blur: 5
+        fillOpacity: 0.5
+  - type: app.LogShape
+    title: LogShape
+    columns: []
+    padding:
+      top: 40
+      bottom: 10
+      left: 10
+      right: 10
+    size:
+      width: 250
+      height: 1
+    itemMinLabelWidth: 80
+    itemHeight: 25
+    itemOffset: 0
+    itemOverflow: true
+    position:
+      x: 29
+      y: 268
+    angle: 0
+    id: c1fdd707-7771-4ce2-b71b-4fd0e2e865d1
+    z: 10
+    attrs:
+      headerLabel:
+        text: Set log
+      textAreaInput:
+        value: please set value 3
+  - type: standard.Link
+    source:
+      id: c1fdd707-7771-4ce2-b71b-4fd0e2e865d1
+    target:
+      id: 86219b1a-10de-46de-b910-8b00d73db871
+    id: 413e326a-c0a1-48c4-9276-d39a48a904cd
+    z: 12
+    attrs:
+      line:
+        stroke: "#A0A0A0"
+  - type: app.DelayShape
+    title: DelayShape
+    columns: []
+    padding:
+      top: 40
+      bottom: 10
+      left: 10
+      right: 10
+    size:
+      width: 250
+      height: 1
+    itemMinLabelWidth: 80
+    itemHeight: 25
+    itemOffset: 0
+    itemOverflow: true
+    position:
+      x: 31
+      y: 457
+    angle: 0
+    id: 995fd877-dde8-4e6c-b078-7b764953bbe1
+    z: 13
+    attrs:
+      headerLabel:
+        text: Set delay
+      numericInput:
+        value: "12"
+  - type: standard.Link
+    source:
+      id: 86219b1a-10de-46de-b910-8b00d73db871
+    target:
+      id: 995fd877-dde8-4e6c-b078-7b764953bbe1
+    id: 150d5a8d-b97f-4d41-ab8e-49880d668781
+    z: 14
+    attrs:
+      line:
+        stroke: "#A0A0A0"
+  - type: standard.Link
+    source:
+      id: 995fd877-dde8-4e6c-b078-7b764953bbe1
+    target:
+      id: 8513df80-2d5c-4931-aa1c-783def30be73
+    id: 58d9b5b3-4f63-42dd-9479-b808cfe8f34f
+    z: 15
+    attrs:
+      line:
+        stroke: "#A0A0A0"
+  - type: app.DelayShape
+    title: DelayShape
+    columns: []
+    padding:
+      top: 40
+      bottom: 10
+      left: 10
+      right: 10
+    size:
+      width: 250
+      height: 1
+    itemMinLabelWidth: 80
+    itemHeight: 25
+    itemOffset: 0
+    itemOverflow: true
+    position:
+      x: 40.5
+      y: 133.875
+    angle: 0
+    id: 04347a95-a106-4eae-82c4-20fed36996a8
+    z: 16
+    attrs:
+      headerLabel:
+        text: Set delay
+      numericInput:
+        value: "3"
+  - type: standard.Link
+    source:
+      id: 279a764b-d624-4699-816f-b28fae07698c
+    target:
+      id: 04347a95-a106-4eae-82c4-20fed36996a8
+    id: ec07a94c-2d1b-42a8-99a8-0ccba7696b6e
+    z: 17
+    attrs:
+      line:
+        stroke: "#A0A0A0"
+  - type: standard.Link
+    source:
+      id: 04347a95-a106-4eae-82c4-20fed36996a8
+    target:
+      id: c1fdd707-7771-4ce2-b71b-4fd0e2e865d1
+    id: e732b722-e4ee-49d8-aef6-e664d71e9476
+    z: 18
+    attrs:
+      line:
+        stroke: "#A0A0A0"

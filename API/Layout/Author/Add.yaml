@@ -1,9 +1,0 @@
-- name: General
-  type: section
-  column: 4
-  showTitle: true
-  fields:
-    - dataType: string
-      label: Name
-      column: 2
-      fieldName: Name

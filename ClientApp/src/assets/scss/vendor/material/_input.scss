@@ -52,7 +52,7 @@
       }
 
       .mdc-text-field {
-        background: var(--main-bg);
+        background: $white;
         padding: 6px 12px;
         border: 1px solid var(--border-color);
         border-radius: 6px;
@@ -78,10 +78,11 @@
         font-weight: normal;
         font-size: 14px;
         line-height: 18px;
-        color: var(--ec-form-field-label-color) !important;
+        color: #78829d !important;
         top: 15px !important;
 
         .mat-mdc-form-field-required-marker {
+          display: none;
           color: var(--ec-form-error-color);
         }
       }
@@ -99,7 +100,7 @@
             font-weight: normal;
             font-size: 14px;
             line-height: 18px;
-            color: var(--primary-black);
+            color: var(--color-4);
             text-overflow: ellipsis;
             box-shadow: none;
           }
@@ -662,4 +663,62 @@
       visibility: visible;
     }
   }
+}
+
+.mat-mdc-select .mat-mdc-select-value .mat-mdc-select-placeholder {
+  font-size: 14px;
+  color: var(--ec-form-field-label-color);
+}
+
+.mat-mdc-option .mat-select-search-inner {
+
+  .mat-select-search-inner-row {
+    display: flex;
+    margin: 8px 10px;
+    border: 1px solid var(--border-color-dark);
+    border-radius: 6px;
+
+    input {
+      padding-left: 8px;
+      padding-top: 0px;
+      padding-right: 0px;
+      max-height: 30px;
+    }
+  }
+
+  .mat-select-search-inner-row::before {
+    font-family: "FontAwesome";
+    content: "\f002";
+    padding-top: 7px;
+    padding-left: 8px;
+    font-size: 13px;
+    color: var(--ec-form-field-label-color);
+  }
+
+  .mat-select-search-clear {
+    padding-top: 0px;
+    margin-right: 7px;
+    background-color: $white;
+
+    .mat-icon {
+      font-size: 16px;
+      margin-top: 6px;
+      padding-right: 0px;
+    }
+  }
+}
+
+.mat-mdc-option.mdc-list-item--selected {
+
+  .mdc-list-item__primary-text {
+    color: $primary-color !important;
+  }
+}
+
+.required-field .mat-mdc-text-field-wrapper {
+  border-top-color: var(--border-color) !important;
+  border-right-color: var(--border-color) !important;
+  border-bottom-color: var(--border-color) !important;
+  border-left: 2px solid $primary-error !important;
+  transition: border-left-color 0.3s ease;
 }

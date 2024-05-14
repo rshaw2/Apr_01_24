@@ -213,6 +213,12 @@ namespace Apr0124.Controllers
 
         private readonly static string jwtKey = !string.IsNullOrEmpty(AppSetting.JwtKey) ? AppSetting.JwtKey : string.Empty;
 
+        /// <summary>
+        /// Generates a JSON Web Token (JWT) using the provided claims and expiry time.
+        /// </summary>
+        /// <param name="claims">An array of claims to be included in the JWT.</param>
+        /// <param name="expiryTime">The expiration time of the JWT in minutes.</param>
+        /// <returns>The generated JWT as a string.</returns>
         protected static string GenerateJSONWebToken(Claim[] claims, int expiryTime)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));

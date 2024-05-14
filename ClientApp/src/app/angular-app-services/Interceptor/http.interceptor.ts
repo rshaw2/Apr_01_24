@@ -94,7 +94,8 @@ export class HttpRequestInterceptor implements HttpInterceptor {
                 const errThrow = throwError(() => error);
                 if (error.status === 401) {
                     this.tokenService.logout();
-                    this.route.navigate(['login'], { queryParams: { returnUrl: this.route.url } });
+                    if (!this.route.url.startsWith('/login'))
+                        this.route.navigate(['login'], { queryParams: { returnUrl: this.route.url } });
                 }
                 else if (error.error?.error?.message) {
                     this.sweetAlertService.showError(error.error.error.message);

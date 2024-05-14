@@ -11,7 +11,8 @@ const routes: Routes = [
     path: '',
     canActivateChild: [canActivateTeam],
     loadChildren: () => HomeModule
-  }
+  },
+  { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

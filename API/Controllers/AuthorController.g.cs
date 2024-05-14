@@ -1,33 +1,35 @@
 using Microsoft.AspNetCore.Mvc;
 using Apr0124.Models;
-using Apr0124.Data;
-using Apr0124.Filter;
+using Apr0124.Services;
 using Apr0124.Entities;
 using Apr0124.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
-using System.Linq.Expressions;
 
 namespace Apr0124.Controllers
 {
     /// <summary>
-    /// Controller responsible for managing author-related operations in the API.
+    /// Controller responsible for managing author related operations.
     /// </summary>
     /// <remarks>
-    /// This controller provides endpoints for adding, retrieving, updating, and deleting author information.
+    /// This Controller provides endpoints for adding, retrieving, updating, and deleting author information.
     /// </remarks>
     [Route("api/author")]
     [Authorize]
     public class AuthorController : ControllerBase
     {
-        private readonly Apr0124Context _context;
+        private readonly IAuthorService _authorService;
 
-        public AuthorController(Apr0124Context context)
+        /// <summary>
+        /// Initializes a new instance of the AuthorController class with the specified context.
+        /// </summary>
+        /// <param name="iauthorservice">The iauthorservice to be used by the controller.</param>
+        public AuthorController(IAuthorService iauthorservice)
         {
-            _context = context;
+            _authorService = iauthorservice;
         }
 
-        /// <summary>Adds a new author to the database</summary>
+        /// <summary>Adds a new author</summary>
         /// <param name="model">The author data to be added</param>
         /// <returns>The result of the operation</returns>
         [HttpPost]
@@ -38,9 +40,8 @@ namespace Apr0124.Controllers
         [UserAuthorize("Author",Entitlements.Create)]
         public IActionResult Post([FromBody] Author model)
         {
-            _context.Author.Add(model);
-            this._context.SaveChanges();
-            return Ok(new { model.Id });
+            var id = _authorService.Create(model);
+            return Ok(new { id });
         }
 
         /// <summary>Retrieves a list of authors based on specified filters</summary>
@@ -60,7 +61,6 @@ namespace Apr0124.Controllers
         [Produces("application/json")]
         public IActionResult Get([FromQuery] string filters, string searchTerm, int pageNumber = 1, int pageSize = 10, string sortField = null, string sortOrder = "asc")
         {
-            List<FilterCriteria> filterCriteria = null;
             if (pageSize < 1)
             {
                 return BadRequest("Page size invalid.");
@@ -71,35 +71,8 @@ namespace Apr0124.Controllers
                 return BadRequest("Page mumber invalid.");
             }
 
-            if (!string.IsNullOrEmpty(filters))
-            {
-                filterCriteria = JsonHelper.Deserialize<List<FilterCriteria>>(filters);
-            }
-
-            var query = _context.Author.IncludeRelated().AsQueryable();
-            int skip = (pageNumber - 1) * pageSize;
-            var result = FilterService<Author>.ApplyFilter(query, filterCriteria, searchTerm);
-            if (!string.IsNullOrEmpty(sortField))
-            {
-                var parameter = Expression.Parameter(typeof(Author), "b");
-                var property = Expression.Property(parameter, sortField);
-                var lambda = Expression.Lambda<Func<Author, object>>(Expression.Convert(property, typeof(object)), parameter);
-                if (sortOrder.Equals("asc", StringComparison.OrdinalIgnoreCase))
-                {
-                    result = result.OrderBy(lambda);
-                }
-                else if (sortOrder.Equals("desc", StringComparison.OrdinalIgnoreCase))
-                {
-                    result = result.OrderByDescending(lambda);
-                }
-                else
-                {
-                    return BadRequest("Invalid sort order. Use 'asc' or 'desc'.");
-                }
-            }
-
-            var paginatedResult = result.Skip(skip).Take(pageSize).ToList();
-            return Ok(paginatedResult);
+            var result = _authorService.Get(filters, searchTerm, pageNumber, pageSize, sortField, sortOrder);
+            return Ok(result);
         }
 
         /// <summary>Retrieves a specific author by its primary key</summary>
@@ -114,8 +87,8 @@ namespace Apr0124.Controllers
         [Produces("application/json")]
         public IActionResult GetById([FromRoute] Guid id)
         {
-            var entityData = _context.Author.IncludeRelated().FirstOrDefault(entity => entity.Id == id);
-            return Ok(entityData);
+            var result = _authorService.GetById(id);
+            return Ok(result);
         }
 
         /// <summary>Deletes a specific author by its primary key</summary>
@@ -131,14 +104,7 @@ namespace Apr0124.Controllers
         [Route("{id:Guid}")]
         public IActionResult DeleteById([FromRoute] Guid id)
         {
-            var entityData = _context.Author.IncludeRelated().FirstOrDefault(entity => entity.Id == id);
-            if (entityData == null)
-            {
-                return NotFound();
-            }
-
-            _context.Author.Remove(entityData);
-            var status = this._context.SaveChanges();
+            var status = _authorService.Delete(id);
             return Ok(new { status });
         }
 
@@ -161,8 +127,7 @@ namespace Apr0124.Controllers
                 return BadRequest("Mismatched Id");
             }
 
-            this._context.Author.Update(updatedEntity);
-            var status = this._context.SaveChanges();
+            var status = _authorService.Update(id, updatedEntity);
             return Ok(new { status });
         }
 
@@ -183,14 +148,7 @@ namespace Apr0124.Controllers
         {
             if (updatedEntity == null)
                 return BadRequest("Patch document is missing.");
-            var existingEntity = this._context.Author.FirstOrDefault(t => t.Id == id);
-            if (existingEntity == null)
-                return NotFound();
-            updatedEntity.ApplyTo(existingEntity, ModelState);
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            this._context.Author.Update(existingEntity);
-            var status = this._context.SaveChanges();
+            var status = _authorService.Patch(id, updatedEntity);
             return Ok(new { status });
         }
     }

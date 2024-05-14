@@ -11,14 +11,14 @@
         "appInsights": false
     },
     "api": {
-        "url": "https://.azurewebsites.net"
+        "url": "API-URL"
     },
     "app": {
-        "title": "Apr 01 24"
+        "title": "APP-TITLE"
     },
     "buildInfo": {
         "number": "1.0.0.0",
-        "createdOn": "Thursday, April 11, 2024 8:45:06 AM"
+        "createdOn": "GENERATED-ON"
     },
     "environments": []
 }

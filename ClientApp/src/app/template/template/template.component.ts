@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subject, forkJoin, takeUntil } from 'rxjs';
+import { Subject, forkJoin, takeUntil } from 'rxjs';
 import { EntityDataService } from 'src/app/angular-app-services/entity-data.service';
 import { LayoutService } from 'src/app/angular-app-services/layout.service';
 import { DEFAULT_PAGESIZE, _camelCase } from 'src/app/library/utils';
@@ -15,9 +15,9 @@ import { IDataState } from '../tempale-list/idata-state.interface';
 })
 export class TemplateComponent implements OnInit, OnDestroy {
   entityName: string = '';
-  form?: FormGroup;
   fieldOptions: { [key: string]: Option[]; } = {};
   filterFields: any[] = [];
+  form?: FormGroup;
   isLoading: boolean = false;
   isLoadMore: boolean = true;
   mappedListData: any[] = [];
@@ -32,15 +32,15 @@ export class TemplateComponent implements OnInit, OnDestroy {
   private listLayout: any;
   private pageNumber: number = 1;
   private pageSize: number = DEFAULT_PAGESIZE;
+  private records: any[] = [];
   private searchTerm: string = '';
   private sortField: string = '';
   private sortOrder: string = 'asc';
-  private records: any[] = [];
 
   constructor(
-    private route: ActivatedRoute,
     private entityDataService: EntityDataService,
-    private layoutService: LayoutService
+    private layoutService: LayoutService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -106,10 +106,10 @@ export class TemplateComponent implements OnInit, OnDestroy {
     switch (fieldInfo.dataType.toLowerCase()) {
       case 'datetime': {
         const date = Date.parse(data + 'Z');
-        return isNaN(date) ? data : new Date(data + 'Z').toLocaleString();
+        return isNaN(date) ? data : new Date(data + 'Z').toLocaleDateString();
       }
       case 'numeric':
-        return new Intl.NumberFormat().format(Number(data));
+        return record[fieldName] !== undefined && record[fieldName] !== null ? new Intl.NumberFormat().format(Number(data)) : '';
       case 'boolean':
         return data ? 'Yes' : 'No';
       case 'guid': {
@@ -196,28 +196,23 @@ export class TemplateComponent implements OnInit, OnDestroy {
   private mapPreviewData(record: any): void {
     if (record && this.editLayout) {
       this.selectedId = record.id;
-      this.mappedPreviewData = this.editLayout.map(node => {
-        return {
-          id: record.id,
-          name: node.name,
-          icon: node.icon,
-          type: node.type,
-          column: node.column,
-          fields: node.fields.map((field: any) => {
-            return {
-              label: field.label,
-              icon: field.icon,
-              value: this.getFormattedData(record, field),
-              column: field.column
-            };
-          })
-        };
-      });
+      this.mappedPreviewData = this.mapPreviewRecursive(this.editLayout, record);
     }
     else {
       this.selectedId = '';
       this.mappedPreviewData = [];
     }
+  }
+
+  private mapPreviewRecursive(layout: any[], record: any): any {
+    return layout?.map(node => {
+      return {
+        id: record.id,
+        ...node,
+        fields: node.fields ? this.mapPreviewRecursive(node.fields, record) : [],
+        value: node.fieldName ? this.getFormattedData(record, node) : ''
+      };
+    });
   }
 
   private prepareFilterFields(): void {
@@ -230,29 +225,13 @@ export class TemplateComponent implements OnInit, OnDestroy {
     this.filterFields.forEach(field => {
       const value = field.dataType.toLowerCase() === 'boolean' ? false : '';
       this.form?.addControl(field.fieldName, new FormControl(value));
-    });
-
-    const fields: string[] = [],
-      apis: Array<Observable<any[]>> = [];
-    this.filterFields?.forEach(field => {
-      if (field.dataType.toLowerCase() === 'guid') {
-        fields.push(field.fieldName);
-        if (field.dataSource)
-          apis.push(this.entityDataService.getRecords(field.dataSource));
+      if (field.dataType?.toLowerCase() === 'guid') {
+        this.form?.addControl(field.fieldName + '_search', new FormControl(value));
+        if (!this.fieldOptions[field.fieldName]) {
+          this.fieldOptions[field.fieldName] = [];
+        }
       }
     });
-
-    if (!apis || apis.length === 0) return;
-
-    forkJoin(apis)
-      .pipe(takeUntil(this.destroy))
-      .subscribe({
-        next: data => {
-          fields.forEach((fieldName, index) => {
-            this.fieldOptions[fieldName] = data[index].map(item => { return { value: item.id, text: item.name }; });
-          });
-        }
-      });
   }
 
   private prepareMappedData(): void {
@@ -270,22 +249,14 @@ export class TemplateComponent implements OnInit, OnDestroy {
               return {
                 label: detail.label,
                 icon: detail.icon,
+                column: detail.column,
                 value: this.getFormattedData(record, detail)
-              };
-            }) || [],
-          status = this.listLayout.cardStatus?.fields?.map(
-            (status: any) => {
-              return {
-                label: status.label,
-                icon: status.icon,
-                value: this.getFormattedData(record, status)
               };
             }) || [];
         return {
           id: record.id,
           cardTitle: titles ? { fields: titles } : null,
-          cardDetail: details ? { fields: details } : null,
-          cardStatus: status ? { fields: status } : null
+          cardDetail: details ? { fields: details } : null
         };
       });
     }

@@ -1,10 +1,11 @@
+@import '../../../assets/scss/helpers/variables';
+
 .main-left-list-sec {
-    padding-top: 25px;
     // padding-bottom: 25px;
 
     .list-sec-scroll-wrapper {
 
-        height: calc(100vh - 170px);
+        height: calc(100vh - 150px);
 
     }
 }
@@ -17,12 +18,20 @@
         max-width: 200px;
         overflow: hidden;
         text-overflow: ellipsis;
+        white-space: nowrap;
     }
 }
 
 .details-area,
 .status-area {
-    max-width: 340px;
+    max-width: 357px;
+    line-height: 1.4;
+
+    .list-label-icon {
+        font-size: 14px;
+        color: #78829d;
+        margin-right: 5px;
+    }
 }
 
 
@@ -43,9 +52,10 @@
 
     .action-button-container {
         margin-right: -10px;
+        height: 20px;
 
         .action-button {
-            color: var(--color-5);
+            color: $icon-color;
 
             .mat-icon {
                 font-size: 17px !important;
@@ -74,14 +84,33 @@
     margin-bottom: 1px;
 }
 
+.list-title-header {
+    font-size: .975rem;
+    font-weight: 500;
+    color: #252f4a;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
 
+
+.list-info-label {
+    font-size: .725rem;
+    font-weight: 400;
+    color: #78829d;
+}
+
+.list-info-text {
+    font-size: 0.925rem;
+    font-weight: 400;
+    color: var(--color-4);
+}
 
 
 // =====================Advance Search==================
 .search-wrapper {
     display: flex;
     align-items: center;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
     border: 1px solid var(--border-color-dark);
     padding: 15px;
     margin-right: 25px;

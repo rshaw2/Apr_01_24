@@ -11,8 +11,7 @@ describe('DashboardComponent', () => {
     await TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       declarations: [DashboardComponent]
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
