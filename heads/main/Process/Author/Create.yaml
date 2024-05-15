@@ -1,0 +1,356 @@
+cells:
+  - type: app.OtherConditionShape
+    columns: []
+    padding:
+      top: 40
+      bottom: 10
+      left: 10
+      right: 10
+    size:
+      width: 251
+      height: 100
+    itemMinLabelWidth: 80
+    itemHeight: 25
+    itemOffset: 0
+    itemOverflow: true
+    position:
+      x: 44
+      y: 22
+    angle: 0
+    title: Trigger
+    id: 279a764b-d624-4699-816f-b28fae07698c
+    z: 1
+    attrs:
+      headerLabel:
+        text: Start
+  - type: app.OtherConditionShape
+    columns: []
+    padding:
+      top: 40
+      bottom: 10
+      left: 10
+      right: 10
+    size:
+      width: 251
+      height: 300
+    itemMinLabelWidth: 80
+    itemHeight: 25
+    itemOffset: 0
+    itemOverflow: true
+    position:
+      x: 48
+      y: 708
+    angle: 0
+    title: Create
+    id: 86219b1a-10de-46de-b910-8b00d73db871
+    z: 2
+    attrs:
+      headerLabel:
+        text: Create
+  - type: standard.Circle
+    position:
+      x: 168
+      y: 819
+    size:
+      width: 15
+      height: 15
+    angle: 0
+    title: Circle
+    id: 8513df80-2d5c-4931-aa1c-783def30be73
+    z: 3
+    attrs:
+      root:
+        tabindex: 12
+      body:
+        strokeWidth: 0.5
+        stroke: "#ccc"
+        fill: "#faf9f7"
+        filter:
+          name: highlight
+          args:
+            color: "#000"
+            width: 0.5
+            opacity: 2
+            blur: 5
+        fillOpacity: 0.5
+  - type: standard.Link
+    source:
+      id: 86219b1a-10de-46de-b910-8b00d73db871
+    target:
+      id: 8513df80-2d5c-4931-aa1c-783def30be73
+    id: 9d19887f-f70f-4069-9f16-57c351fca05f
+    z: 5
+    attrs:
+      line:
+        stroke: "#A0A0A0"
+  - type: app.OtherProcessShape
+    title: OtherProcessShape
+    columns: []
+    padding:
+      top: 40
+      bottom: 10
+      left: 10
+      right: 10
+    size:
+      width: 250
+      height: 1
+    itemMinLabelWidth: 80
+    itemHeight: 25
+    itemOffset: 0
+    itemOverflow: true
+    position:
+      x: 42
+      y: 122
+    angle: 0
+    id: bbcbe2ee-8c74-4fd5-980f-bfcdd7c83ad7
+    z: 14
+    markup:
+      - tagName: rect
+        selector: body
+      - tagName: rect
+        selector: header
+      - tagName: g
+        selector: tabColor
+        children:
+          - tagName: image
+            selector: iconsGroup_1
+          - tagName: text
+            selector: headerLabel
+          - tagName: image
+            selector: option
+      - tagName: foreignObject
+        selector: inputTextarea
+        children:
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: label
+            textContent: Entity
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: select
+            selector: dropdownInput
+      - tagName: foreignObject
+        selector: inputAction
+        children:
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: label
+            textContent: Action
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: select
+            selector: dropdownAction
+      - tagName: foreignObject
+        selector: inputParams_0
+        attributes:
+          width: 236
+          height: 55
+          x: 13
+          y: 162
+        children:
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: label
+            textContent: filters
+            style:
+              width: 96%
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: input
+            style:
+              box-sizing: border-box
+              width: 100%
+              outline: none
+              border: 1px solid var(--border-color)
+              color: var(--primary-text-color)
+              padding: 5px 0px 5px 8px
+              backgroundColor: var(--input-bg-color)
+              margin-top: 5px
+              border-radius: 5px
+            selector: filters
+      - tagName: foreignObject
+        selector: inputParams_1
+        attributes:
+          width: 236
+          height: 55
+          x: 13
+          y: 222
+        children:
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: label
+            textContent: searchTerm
+            style:
+              width: 96%
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: input
+            style:
+              box-sizing: border-box
+              width: 100%
+              outline: none
+              border: 1px solid var(--border-color)
+              color: var(--primary-text-color)
+              padding: 5px 0px 5px 8px
+              backgroundColor: var(--input-bg-color)
+              margin-top: 5px
+              border-radius: 5px
+            selector: searchTerm
+      - tagName: foreignObject
+        selector: inputParams_2
+        attributes:
+          width: 236
+          height: 55
+          x: 13
+          y: 282
+        children:
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: label
+            textContent: pageNumber
+            style:
+              width: 96%
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: input
+            style:
+              box-sizing: border-box
+              width: 100%
+              outline: none
+              border: 1px solid var(--border-color)
+              color: var(--primary-text-color)
+              padding: 5px 0px 5px 8px
+              backgroundColor: var(--input-bg-color)
+              margin-top: 5px
+              border-radius: 5px
+            selector: pageNumber
+      - tagName: foreignObject
+        selector: inputParams_3
+        attributes:
+          width: 236
+          height: 55
+          x: 13
+          y: 342
+        children:
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: label
+            textContent: pageSize
+            style:
+              width: 96%
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: input
+            style:
+              box-sizing: border-box
+              width: 100%
+              outline: none
+              border: 1px solid var(--border-color)
+              color: var(--primary-text-color)
+              padding: 5px 0px 5px 8px
+              backgroundColor: var(--input-bg-color)
+              margin-top: 5px
+              border-radius: 5px
+            selector: pageSize
+      - tagName: foreignObject
+        selector: inputParams_4
+        attributes:
+          width: 236
+          height: 55
+          x: 13
+          y: 402
+        children:
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: label
+            textContent: sortField
+            style:
+              width: 96%
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: input
+            style:
+              box-sizing: border-box
+              width: 100%
+              outline: none
+              border: 1px solid var(--border-color)
+              color: var(--primary-text-color)
+              padding: 5px 0px 5px 8px
+              backgroundColor: var(--input-bg-color)
+              margin-top: 5px
+              border-radius: 5px
+            selector: sortField
+      - tagName: foreignObject
+        selector: inputParams_5
+        attributes:
+          width: 236
+          height: 55
+          x: 13
+          y: 462
+        children:
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: label
+            textContent: sortOrder
+            style:
+              width: 96%
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: input
+            style:
+              box-sizing: border-box
+              width: 100%
+              outline: none
+              border: 1px solid var(--border-color)
+              color: var(--primary-text-color)
+              padding: 5px 0px 5px 8px
+              backgroundColor: var(--input-bg-color)
+              margin-top: 5px
+              border-radius: 5px
+            selector: sortOrder
+    attrs:
+      body:
+        height: 522
+      headerLabel:
+        text: Call another
+      dropdownInput:
+        html:
+          - <option value='' selected>Select</option>
+          - <option value='AuthorService'>AuthorService</option>
+          - <option value='BooksService'>BooksService</option>
+          - <option value='EntityService'>EntityService</option>
+          - <option
+            value='RoleEntitlementService'>RoleEntitlementService</option>
+          - <option value='RoleService'>RoleService</option>
+          - <option value='TenantService'>TenantService</option>
+          - <option
+            value='UserAuthenticationService'>UserAuthenticationService</option>
+          - <option value='UserInRoleService'>UserInRoleService</option>
+          - <option value='UserService'>UserService</option>
+        value: AuthorService
+      dropdownAction:
+        html:
+          - <option value='' selected>Select</option>
+          - <option value='GetById'>GetById</option>
+          - <option value='Get'>Get</option>
+          - <option value='Create'>Create</option>
+          - <option value='Update'>Update</option>
+          - <option value='Patch'>Patch</option>
+          - <option value='Delete'>Delete</option>
+        value: Get
+      filters:
+        value: Name,contains,PK
+      searchTerm:
+        value: history
+      pageNumber:
+        value: "1"
+      pageSize:
+        value: "5"
+      sortField:
+        value: Title
+      sortOrder:
+        value: ASC
+  - type: standard.Link
+    source:
+      id: 279a764b-d624-4699-816f-b28fae07698c
+    target:
+      id: bbcbe2ee-8c74-4fd5-980f-bfcdd7c83ad7
+    id: 5d714e8b-a2a9-4019-b77d-b4945bb05a33
+    z: 15
+    attrs:
+      line:
+        stroke: "#A0A0A0"
+  - type: standard.Link
+    source:
+      id: bbcbe2ee-8c74-4fd5-980f-bfcdd7c83ad7
+    target:
+      id: 86219b1a-10de-46de-b910-8b00d73db871
+    id: 43d4ce0e-b2dd-4679-969b-430521fa5599
+    z: 16
+    attrs:
+      line:
+        stroke: "#A0A0A0"
