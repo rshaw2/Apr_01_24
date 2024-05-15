@@ -1,0 +1,413 @@
+cells:
+  - type: app.OtherConditionShape
+    columns: []
+    padding:
+      top: 40
+      bottom: 10
+      left: 10
+      right: 10
+    size:
+      width: 251
+      height: 100
+    itemMinLabelWidth: 80
+    itemHeight: 25
+    itemOffset: 0
+    itemOverflow: true
+    position:
+      x: 44
+      y: 22
+    angle: 0
+    title: Trigger
+    id: 279a764b-d624-4699-816f-b28fae07698c
+    z: 1
+    attrs:
+      headerLabel:
+        text: Start
+  - type: app.OtherConditionShape
+    columns: []
+    padding:
+      top: 40
+      bottom: 10
+      left: 10
+      right: 10
+    size:
+      width: 251
+      height: 300
+    itemMinLabelWidth: 80
+    itemHeight: 25
+    itemOffset: 0
+    itemOverflow: true
+    position:
+      x: 45
+      y: 772
+    angle: 0
+    title: Create
+    id: 86219b1a-10de-46de-b910-8b00d73db871
+    z: 2
+    attrs:
+      headerLabel:
+        text: Create
+  - type: standard.Circle
+    position:
+      x: 164
+      y: 921
+    size:
+      width: 15
+      height: 15
+    angle: 0
+    title: Circle
+    id: 8513df80-2d5c-4931-aa1c-783def30be73
+    z: 3
+    attrs:
+      root:
+        tabindex: 12
+      body:
+        strokeWidth: 0.5
+        stroke: "#ccc"
+        fill: "#faf9f7"
+        filter:
+          name: highlight
+          args:
+            color: "#000"
+            width: 0.5
+            opacity: 2
+            blur: 5
+        fillOpacity: 0.5
+  - type: standard.Link
+    source:
+      id: 86219b1a-10de-46de-b910-8b00d73db871
+    target:
+      id: 8513df80-2d5c-4931-aa1c-783def30be73
+    id: 9d19887f-f70f-4069-9f16-57c351fca05f
+    z: 5
+    attrs:
+      line:
+        stroke: "#A0A0A0"
+  - type: app.OtherProcessShape
+    title: OtherProcessShape
+    columns: []
+    padding:
+      top: 40
+      bottom: 10
+      left: 10
+      right: 10
+    size:
+      width: 250
+      height: 1
+    itemMinLabelWidth: 80
+    itemHeight: 25
+    itemOffset: 0
+    itemOverflow: true
+    position:
+      x: 44
+      y: 113
+    angle: 0
+    id: 7f0e4986-747b-42c7-9650-3c84fad9fad9
+    z: 18
+    markup:
+      - tagName: rect
+        selector: body
+      - tagName: rect
+        selector: header
+      - tagName: g
+        selector: tabColor
+        children:
+          - tagName: image
+            selector: iconsGroup_1
+          - tagName: text
+            selector: headerLabel
+          - tagName: image
+            selector: option
+      - tagName: foreignObject
+        selector: inputTextarea
+        children:
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: label
+            textContent: Entity
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: select
+            selector: dropdownInput
+      - tagName: foreignObject
+        selector: inputAction
+        children:
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: label
+            textContent: Action
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: select
+            selector: dropdownAction
+      - tagName: foreignObject
+        selector: inputParams_0
+        attributes:
+          width: 236
+          height: 55
+          x: 13
+          y: 162
+        children:
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: label
+            className: truncate-text
+            textContent: filters
+            style:
+              width: 100%
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: input
+            attributes:
+              datatype: string
+            style:
+              box-sizing: border-box
+              width: 100%
+              outline: none
+              border: 1px solid var(--border-color)
+              color: var(--primary-text-color)
+              padding: 5px 0px 5px 8px
+              backgroundColor: var(--input-bg-color)
+              margin-top: -5px
+              border-radius: 5px
+            selector: filters
+      - tagName: foreignObject
+        selector: inputParams_1
+        attributes:
+          width: 236
+          height: 55
+          x: 13
+          y: 217
+        children:
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: label
+            className: truncate-text
+            textContent: searchTerm
+            style:
+              width: 100%
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: input
+            attributes:
+              datatype: string
+            style:
+              box-sizing: border-box
+              width: 100%
+              outline: none
+              border: 1px solid var(--border-color)
+              color: var(--primary-text-color)
+              padding: 5px 0px 5px 8px
+              backgroundColor: var(--input-bg-color)
+              margin-top: -5px
+              border-radius: 5px
+            selector: searchTerm
+      - tagName: foreignObject
+        selector: inputParams_2
+        attributes:
+          width: 236
+          height: 55
+          x: 13
+          y: 272
+        children:
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: label
+            className: truncate-text
+            textContent: pageNumber
+            style:
+              width: 100%
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: input
+            attributes:
+              datatype: int
+            style:
+              box-sizing: border-box
+              width: 100%
+              outline: none
+              border: 1px solid var(--border-color)
+              color: var(--primary-text-color)
+              padding: 5px 0px 5px 8px
+              backgroundColor: var(--input-bg-color)
+              margin-top: -5px
+              border-radius: 5px
+            selector: pageNumber
+      - tagName: foreignObject
+        selector: inputParams_3
+        attributes:
+          width: 236
+          height: 55
+          x: 13
+          y: 327
+        children:
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: label
+            className: truncate-text
+            textContent: pageSize
+            style:
+              width: 100%
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: input
+            attributes:
+              datatype: int
+            style:
+              box-sizing: border-box
+              width: 100%
+              outline: none
+              border: 1px solid var(--border-color)
+              color: var(--primary-text-color)
+              padding: 5px 0px 5px 8px
+              backgroundColor: var(--input-bg-color)
+              margin-top: -5px
+              border-radius: 5px
+            selector: pageSize
+      - tagName: foreignObject
+        selector: inputParams_4
+        attributes:
+          width: 236
+          height: 55
+          x: 13
+          y: 382
+        children:
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: label
+            className: truncate-text
+            textContent: sortField
+            style:
+              width: 100%
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: input
+            attributes:
+              datatype: string
+            style:
+              box-sizing: border-box
+              width: 100%
+              outline: none
+              border: 1px solid var(--border-color)
+              color: var(--primary-text-color)
+              padding: 5px 0px 5px 8px
+              backgroundColor: var(--input-bg-color)
+              margin-top: -5px
+              border-radius: 5px
+            selector: sortField
+      - tagName: foreignObject
+        selector: inputParams_5
+        attributes:
+          width: 236
+          height: 55
+          x: 13
+          y: 437
+        children:
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: label
+            className: truncate-text
+            textContent: sortOrder
+            style:
+              width: 100%
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: input
+            attributes:
+              datatype: string
+            style:
+              box-sizing: border-box
+              width: 100%
+              outline: none
+              border: 1px solid var(--border-color)
+              color: var(--primary-text-color)
+              padding: 5px 0px 5px 8px
+              backgroundColor: var(--input-bg-color)
+              margin-top: -5px
+              border-radius: 5px
+            selector: sortOrder
+      - tagName: foreignObject
+        selector: outputParams
+        attributes:
+          width: 236
+          height: 80
+          x: 13
+          y: 492
+        children:
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: label
+            textContent: Save response as (List<Author>)
+            className: truncate-text
+            style:
+              width: 100%
+              padding-top: 10px
+              margin-top: 10px
+              border-top: 1px solid var(--separator-color)
+          - namespaceURI: http://www.w3.org/1999/xhtml
+            tagName: input
+            style:
+              box-sizing: border-box
+              width: 100%
+              outline: none
+              border: 1px solid var(--border-color)
+              color: var(--primary-text-color)
+              padding: 5px 0px 5px 8px
+              backgroundColor: var(--input-bg-color)
+              margin-top: -5px
+              border-radius: 5px
+            selector: response
+    attrs:
+      body:
+        height: 572
+      headerLabel:
+        text: Call another
+      dropdownInput:
+        html:
+          - <option value='' selected>Select</option>
+          - <option value='AuthorService'>AuthorService</option>
+          - <option value='BooksService'>BooksService</option>
+          - <option value='EntityService'>EntityService</option>
+          - <option
+            value='RoleEntitlementService'>RoleEntitlementService</option>
+          - <option value='RoleService'>RoleService</option>
+          - <option value='TenantService'>TenantService</option>
+          - <option
+            value='UserAuthenticationService'>UserAuthenticationService</option>
+          - <option value='UserInRoleService'>UserInRoleService</option>
+          - <option value='UserService'>UserService</option>
+        value: AuthorService
+      dropdownAction:
+        value: Get
+        html:
+          - <option value='' selected>Select</option>
+          - <option value='GetById'>GetById</option>
+          - <option value='Get'>Get</option>
+          - <option value='Create'>Create</option>
+          - <option value='Update'>Update</option>
+          - <option value='Patch'>Patch</option>
+          - <option value='Delete'>Delete</option>
+      filters:
+        value: Name,eq,PK
+        dataType: string
+      pageNumber:
+        value: "2"
+        dataType: int
+      searchTerm:
+        value: history
+        dataType: string
+      pageSize:
+        value: "5"
+        dataType: int
+      sortField:
+        value: Title
+        dataType: string
+      sortOrder:
+        value: ASC
+        dataType: string
+      response:
+        value: filteredAuthors
+        dataType: List<Author>
+  - type: standard.Link
+    source:
+      id: 279a764b-d624-4699-816f-b28fae07698c
+    target:
+      id: 7f0e4986-747b-42c7-9650-3c84fad9fad9
+    id: 1f70ea2b-8505-4f06-8b04-7f34accbb88b
+    z: 19
+    attrs:
+      line:
+        stroke: "#A0A0A0"
+  - type: standard.Link
+    source:
+      id: 7f0e4986-747b-42c7-9650-3c84fad9fad9
+    target:
+      id: 86219b1a-10de-46de-b910-8b00d73db871
+    id: 83e71f16-4234-4015-bbad-0ebdf1ba4606
+    z: 20
+    attrs:
+      line:
+        stroke: "#A0A0A0"
